@@ -1,0 +1,84 @@
+INTRODUCTION TO MY FIRST WEB PAGE
+
+Can upload a file to workspaces by dragging and dropping into bottom left corner. Changed image source to
+
+<img src="sam.jpg" alt="Sam">
+
+changed some text, a border radius (from 100%,  circle, to 10%, rounded corners), and font sizes.
+
+
+
+
+TEXT EDITORS AND EXTERNAL STYLE SHEETS
+
+While we can write style tags directly in the html document, that makes changing a website arduous - you would need to change the style on each page. Having an external style sheet allows you to change the entire website at once. The C in CSS means that while the rues cascade down the page, they override the rule before it. This works when you're writing basic rules, but there are many ways that this cascading rule does not work.
+
+
+
+
+WHAT'S NEW IN YOUR HTML
+
+language attribute in html tag. It's called an attribute because it adds information to an opening tag.
+
+<html lang="en">
+
+
+link to our style sheet. the href attribute specifies the path to the resource. the rel attribute defines the relationship of the current page to the thing that we're linking it to.
+
+<link href="style.css" rel="stylesheet">
+
+
+image element. src attribute specifies that path the the image file
+
+<img src="joy.jpg" alt="Joy">
+
+
+
+
+COMMENTS, SELECTORS, AND SYNTAX
+
+Selectors (h1) select a part of the html document so you can change how it looks. Inside the curly braces, you have a property (color). This identifies what you want to change. Lastly, you have a value (orange), which says how you want a particular property to change.
+
+h1 {
+	color: orange;
+}
+
+
+/* this is a comment
+on multiple lines */
+
+
+margin applies space outside of an element
+padding applies space inside of an element
+border is between padding and margin
+
+
+
+
+COLOR KEYWORDS, HEX COLORS, AND FONT FAMILIES
+
+some properties used to add color: color, background color, border
+
+CSS has a few ways to identify color, including color keywords and hexadecimal colors.
+
+#rrggbb where r, g, and b are numbers or letters
+can abbreviate when each pair repeat the same character
+#0099CC can be written #09C
+
+http://www.html-color-names.com/color-chart.php
+
+
+google web fonts at https://fonts.google.com/
+choose a font, add it to your collection, press use, scroll down and there is a link and the font family
+
+in html
+
+<link href='htt;://fonts.googleapis.com/css?family=Open+Sans' rel="stylesheet" type="text/css">
+
+in stylesheet
+
+font-family: 'Open Sans', sans-serif;
+
+
+
+

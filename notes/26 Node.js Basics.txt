@@ -1,0 +1,533 @@
+INTRODUCTION TO NODE.JS
+
+OVERVIEW
+
+node is great for chat applications, and other apps with lots of connections sending info simultaneously
+
+build tools like Grunt.js, Gulp.js, and Webpack concat your javascript files together, compile any SASS, minifiy source code, and many more things.
+
+node can be used to build all sorts of applications, from web apps deployed in the internet, to desktop and command-line apps that you can run on your local machine
+
+
+
+
+
+
+HELLO WORLD
+
+node -v in the console to check the version/that node is running.
+
+node nameOfFile.js will run the file
+
+console.error("error message here");
+
+console.dir({key: "value", key: "value"}); prints out key value pairs in a human-readable format
+
+node also allows you to experiment with javascript in the terminal. type node and hit enter, brings up interactive javascript console. a console like this is known as a read evaluate print loop or REPL. As it reads your code that you enter, it evaluates it, or runs it, and then prints it out.
+
+to exit console ctrl+D, or ctrl+C twice
+
+writing a node.js application is writing a javascript application, but outside of the browser
+
+
+
+
+
+
+JAVASCRIPT WITHOUT THE BROWSER
+
+we use the javascript programming language, which is intrepreted and executed by the browser's engine, against browser specific APIs like the DOM
+
+native objects are provided by the javascript programming language - string, array, date, math, etc
+
+host objects are provided by the environment. in the browser, window, document, history, XMLHttpRequest, etc
+
+node.js took chrome's v8 engine, left browser objects behind, created new objects like http, https, fs (file system), url, os, etc
+
+the coupling of the v8 engine with the APIs is known as the Node.js platform or Node.js environment
+
+javascript apps can now run standalone on a computer or even on the internet running on a server
+
+
+
+
+
+
+WHY USE NODE.JS
+
+most languages complete a task beginning to end before starting another task - blocking languages
+
+node.js is nonblocking
+
+
+
+
+
+
+FINDING HELP AS A NODE.JS DEVELOPER
+
+treehouse forum, search engines, node.js.org docs
+
+api is the object and methods you can use in a given environment, dom for browser
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+BUILDING A COMMAND LINE APPLICATION
+
+PLANNING OUR PROJECT
+
+good to have a methodology for solving the problem
+the 4 Ps of problem-solving:
+- prepare: diagnose problem, propose solution, look for tools
+- plan: plan the solution. write comments in js file
+- perform: perfom actions from planning phase, ie write code
+- perfect: incrementally improve project. handle errors, add more functionality
+
+api allows you to programatically interact with another program
+
+REST apis allow you to interact with objects and actions via http requests rather than javascript directly. Most websites that provide an api will have some documentation on how you can interact with it.
+
+
+
+
+
+
+SYSTEM EVENTS
+
+time passing, ready state change of an ajax request, reading data from a url or file (data events), when an action is completed (completion events), error handling events (error events)
+
+
+
+
+
+
+MAKING A GET REQUEST WITH HTTPS
+
+the https module isn't available in node.js until you require it
+
+const https = require('https');
+
+
+ex:
+
+const request = https.get(`https://teamtreehouse.com/${username}.json`, response => {
+  console.log(response.statusCode);
+});
+
+> 200
+
+
+
+
+
+
+GETTING THE RESPONSE BODY
+
+the response object has a data event that gets emitted when a piece of data comes in
+
+whenever you see a data event in node.js, there will be an end event.
+
+data is sent in snippets of "buffer". can be converted with .toString(). can concatenate each snippet to get one string of data.
+
+ex:
+
+const request = https.get(`https://teamtreehouse.com/${username}.json`, response => {
+  let body = '';
+  
+  // Each data snippet is converted to string and added to body
+  response.on('data', data => {
+    body += data.toString();
+  });
+  
+  response.on('end', () => {
+    console.log(body);
+  });
+});
+
+
+
+
+
+
+PARSING JSON
+
+you can change a string to a json object with JSON.
+
+ex:
+
+  response.on('end', () => {
+  //Parse the data
+    const profile = JSON.parse(body);
+  //Print the data
+    printMessage(username, profile.badges.length, profile.points.JavaScript);
+  });
+
+> chalkers has 209 total badge(s) and 5988 points in JavaScript
+
+
+
+
+
+
+CAPTURING COMMAND LINE ARGUMENTS
+
+node has a global object just like window in the browser, but it's called process. It has a property called "argv" that contains the arguments of the file. It returns 2 arguments automatically (one for node, one for the directory), so we can access arguments that we type in the console after the filename by using slice
+
+const users = process.argv.slice(2);
+users.forEach(getProfile);
+
+> node app.js chalkers alenaholligan davemcfarland
+alenaholligan has 82 total badge(s) and 125 points in JavaScript
+chalkers has 196 total badge(s) and 5269 points in JavaScript
+davemcfarland has 227 total badge(s) and 6902 points in JavaScript
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Require https module
+const https = require('https');
+
+
+// Function to print message to console
+function printMessage(username, badgeCount, points) {
+  const message = `${username} has ${badgeCount} total badge(s) and ${points} points in JavaScript`;
+  console.log(message);
+}
+
+function getProfile(username) {
+// Connect to the API URL (https://teamtreehouse.com/username.json)
+  const request = https.get(`https://teamtreehouse.com/${username}.json`, response => {
+    let body = '';
+  
+    // Read the data
+    response.on('data', data => {
+      body += data.toString();
+    });
+  
+    response.on('end', () => {
+      //Parse the data
+      const profile = JSON.parse(body);
+      //Print the data
+      printMessage(username, profile.badges.length, profile.points.JavaScript);
+    });
+  });
+}
+
+const users = process.argv.slice(2);
+users.forEach(getProfile);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+HANDLING ERRORS IN NODE
+
+HANDLING THE ERROR EVENT IN NODE
+
+when the url doesn't comply to specifications, an error is thrown immediately (exception) and needs to be handled with try/catch blocks
+
+  try {
+    some code here :)
+  } catch (error) {
+    console.log(error.message);
+  }
+
+if the request meets specs but is invalid, an error event is emitted. 
+
+    request.on('error', error => console.error(`Problem with request: ${error.message}`));
+
+
+
+
+
+
+HANDLING PARSING ERRORS WITH TRY AND CATCH
+
+If the data being returned is not json, there will be an error
+
+      response.on('end', () => {
+        try {
+          //Parse the data
+          const profile = JSON.parse(body);
+          //Print the data
+          printMessage(username, profile.badges.length, profile.points.JavaScript);
+        } catch (error) {
+          printError(error);
+        }
+      });
+
+
+
+
+
+
+HANDLING STATUS CODE ERRORS
+
+use an if/else to check the status code, and http.STATUS_CODES[] to translate it to english
+
+// Require http module for status code
+const http = require('http');
+
+if (response.statusCode === 200) {
+  some code!
+} else {
+  const message = `There was an error getting the profile for ${username} (${http.STATUS_CODES[response.statusCode]})`;
+  const statusCodeError = new Error(message);
+  printError(statusCodeError);
+}
+
+
+
+
+
+
+ORGANIZING YOUR CODE WITH REQUIRE
+
+you can make functions within one file accessible to another file
+
+Within the file containing the function:
+module.exports.functionName = functionName;
+
+and then in the file using the function:
+const fileName = require('./fileName.js');
+
+".js" is optional. "./" means within the same folder, and is mandatory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// Problem: We need a simple way to look at a user's badge count and JavaScript points
+// Solution: Use Node.js to connect to Treehouse's API to get profile information to print out
+
+// Require https module
+const https = require('https');
+// Require http module for status code
+const http = require('http');
+
+//Print Error Messages
+function printError(error) {
+  console.error(error.message);
+}
+
+
+// Function to print message to console
+function printMessage(username, badgeCount, points) {
+  const message = `${username} has ${badgeCount} total badge(s) and ${points} points in JavaScript`;
+  console.log(message);
+}
+
+function getProfile(username) {
+  try {
+    // Connect to the API URL (https://teamtreehouse.com/username.json)
+    const request = https.get(`https://teamtreehouse.com/${username}.json`, response => {
+      if (response.statusCode === 200) {
+        let body = '';
+    
+        // Read the data
+        response.on('data', data => {
+          body += data.toString();
+        });
+    
+        response.on('end', () => {
+          try {
+            //Parse the data
+            const profile = JSON.parse(body);
+            //Print the data
+            printMessage(username, profile.badges.length, profile.points.JavaScript);
+          } catch (error) {
+            printError(error);
+          }
+        });
+      } else {
+        const message = `There was an error getting the profile for ${username} (${http.STATUS_CODES[response.statusCode]})`;
+        const statusCodeError = new Error(message);
+        printError(statusCodeError)
+      }
+    });
+
+    request.on('error', printError);
+  } catch (error) {
+    printError(error);
+  }
+}
+
+const users = process.argv.slice(2);
+users.forEach(getProfile);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE A COMMAND LINE WEATHER APPLICATION
+
+PROJECT OVERVIEW
+
+RETRIEVING DATA - SOLUTION
+
+PARSING DATA AND PRINTING - SOLUTION
+
+HANDLING ERRORS - SOLUTION
+
+
+
+
+
+
+
+
+
+WEATHER.JS
+
+const http = require('http');
+const https = require('https');
+const querystring = require('querystring');
+const api = require('./api.json');
+
+// Print out temp details
+function printWeather(weather) {
+  const message =  `Current temperature in ${weather.name} is ${weather.main.temp}F`;
+  console.log(message);
+}
+
+// Print out error message
+function printError(error) {
+  console.error(error.message);
+}
+
+function get(query) {
+  try {
+     const parameters = {
+      APPID: api.key,
+      units: 'imperial'
+    };
+    
+    const zipCode = parseInt(query);
+    if (!isNaN(zipCode)) {
+      parameters.zip = zipCode + ',us';
+    } else {
+      parameters.q = query + ',us';
+    }
+    
+    const url = `https://api.openweathermap.org/data/2.5/weather?${querystring.stringify(parameters)}`;
+  
+    const request = https.get(url, response => {
+      if (response.statusCode === 200) {
+        let body = '';
+        // Read the data
+        response.on('data', chunk => {
+          body += chunk;
+        });
+        
+        response.on('end', () => {
+           try {
+             // Parse te data
+             const weather = JSON.parse(body);
+             // Print the data
+             printWeather(weather);
+           } catch (error) {
+             // Parser error
+             printError(error);
+           }
+        })
+      } else {
+        // Status error code
+        const statusErrorCode = new Error(`There was an error getting the message for "${query}". (${http.STATUS_CODES[response.statusCode]})`);
+        printError(statusErrorCode);
+      }
+    });
+  } catch (error) {
+    //Malformed URL Error
+    printError(error);
+  }
+};
+
+module.exports.get = get;
+  
+
+
+
+
+
+
+APP.JS
+
+const weather = require('./weather');
+
+const query = process.argv[2];
+
+weather.get(query);
+
+
+
+
+
+
+API.JSON
+
+{
+  "key": "9ff694fd3b0dd1396d5ff4931a8ab6c3"
+}

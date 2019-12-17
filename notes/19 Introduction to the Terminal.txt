@@ -1,0 +1,314 @@
+THE COMMAND SHELL
+
+WHAT IS THE TERMINAL?
+
+Graphical User Interface vs Command-Line Interface.
+
+CLI takes longer to learn but is more powerful.
+
+Many developer tools only have CLI, not GUI.
+
+Most operating systems have some sort of Terminal app by default. Called Command Prompt on Windows.
+
+Console works just like terminal.
+
+Vast majority of servers where developers deploy their software are running operating systems that are compatible with Unix, a powerful OS developed in the 1960s. Compatible OSs include Linux and Mac OS. Windows is different.
+
+
+
+
+
+THE SHELL
+
+The terminal is a text interface. By default, terminals run a program called a shell. Shell programs typically end in -SH, like ZSH, KSH, and Bash. Displays a prompt ending with a $. We can run commands at the prompt to execute other programs inside the shell.
+
+ls - a program for listing files.
+
+whoami - prints the name of the current user account.
+
+cat - returns concatenated contents of files. Provide names of files after "cat"
+
+CTRL + c - quit
+
+clear - clears output
+
+CTRL + l - clears output
+
+
+
+
+
+
+COMMAND ARGUMENTS
+
+cat, when provided one argument, returns the contents of the file.
+
+arguments follow the command
+
+arguments are separated by space(s)
+
+anything contained with parentheses is one argument (even spaces)
+
+echo - returns whatever you pass as an argument(s)
+
+
+
+
+
+
+COMMAND OPTIONS
+
+usually - and a single letter, given before arguments
+
+ls:
+
+-a = all, even hidden files (which start with .)
+
+-t = sorted by time (new to old)
+
+cat:
+
+-n = numbers the output
+
+
+also -- followed by one or more words
+
+ls:
+
+--all
+
+
+
+
+
+
+SHORTCUTS
+
+history, displays previous commands
+
+up arrow, takes you back through commands
+
+tab, type first few letters of command, argument then tab for autocomplete
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+DIRECTORIES AND FILES
+
+DIRECTORIES
+
+= folders(but in the shell). The term directory predates folders.
+
+pwd = print working directory (what file/directory we're in)
+
+cd = change directories, with desired directory (file) as argument
+
+cd .. = change to parent directory
+
+
+
+
+
+
+RELATIVE PATHS
+
+relative to your starting location in the file system
+
+
+
+
+
+
+ABSOLUTE PATHS
+
+stays the same no matter what directory you're in - always starts at the root directory
+
+root (ultimate parent!) directory doesn't have a name, it's just a /
+
+
+
+
+
+
+DIRECTORY SHORTCUTS
+
+. = current directory
+
+executable files cannot be run by typing their name, it must include a file path. if you're already in the directory that contains the file, you can use ./executableFile
+
+.. = parent directory. can be used as argument, path
+
+~ = user account's home directory. standalone path. can be used as part of path
+
+
+
+
+
+
+WILDCARD EXPANSION
+
+* = represents a group of any characters, used for partial matches
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+COMMON COMMANDS
+
+VIEWING FILES WITH "LESS"
+
+pager programs display a file on your terminal screen one page at a time. they're interactive and wait for a response before moving to the next page.
+
+more = pager program, press spacebar for next page. ends when it reaches end of file, leaves text on terminal.
+
+less = also pager program, press spacebar for next page or arrows for scroll. does not end at end of file (so you can still scroll up), press q to quit and clear terminal of text file
+
+
+
+
+
+
+WORKING WITH FILES
+
+cp = copy files and directories. first argument is file to copy, second is name of file we want to copy to, or directory. normally if you ask cp to copy a directory it will skip it, unles you add -r before the directory to copy
+
+-r = recursive, the directory, it's contents, subdirectories, their contents will all be copied
+
+example:
+
+cp -r offices/ more_offices
+
+// creates a new directory called more_offices/, whose contents will be the same as offices/
+
+
+mv = move. first argument(s) is/are file(s) to be moved, last is where to move it. if the last file is new, you are essentially renaming. if last argument is a directory, file will be moved into directory.
+
+example:
+
+mv bird.txt sparrow.txt
+
+// renames bird.txt to sparrow.txt
+
+mv *.txt ..
+
+// moves all files ending in .txt into the parent directory
+
+
+
+rm = remove. no undo for remove. needs -r to remove directories
+
+mkdir = make directory.
+
+-p = parent
+
+example:
+
+mkdir -p park/playground/toys
+
+// park already existed, and this creates a playground directory within it, and a toys directory within that
+
+
+
+
+
+
+FILE AND DIRECTORY NAMING CONVENTIONS
+
+lowercase, english alphabet, dash, underscore, number
+
+
+
+
+
+THE MANUAL
+
+man = manual. argument is program you want info about.
+
+[] means the argument is optional. 
+... means there can be more than one argument.
+
+more as a reminder than a tutorial, written technically
+
+
+
+
+
+
+OTHER THINGS TO EXPLORE
+
+find = by itself, searches recursively through the current directory and prints out the name of every file and subdirectory.
+
+find -name = used to search for a file/directory by name. if you use a * you must surround the argument with ""
+
+example:
+
+find -name "*.txt"
+
+// searches for all files ending in .txt
+
+
+grep = prints lines in a file that match a pattern
+
+example:
+
+grep "Windows" terminal.txt
+
+// finds and prints to terminal every line that contains the word "Windows" within the terminal.txt file 
+
+
+vi = visual, default editing program. argument is file to edit. has two important modes: when it starts, it's in command mode. pressing "i" changes to insert mode. esc to return to command mode.
+
+example:
+
+vi myfile.txt
+
+i
+
+type some stuff
+
+:w = write the contents of the editor out to the file (save)
+
+:q = quit
+
+
+nano = another editing program. argument is name of file to edit. commands are listed at the bottom of the screen, where ^ is the control key
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

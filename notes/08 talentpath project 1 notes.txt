@@ -1,0 +1,29 @@
+“What would America be like if we loved black people as much as we love black culture?” - Amandla Stenberg (Don't Cash Crop My Cornrows, YouTube)
+
+“Where justice is denied, where poverty is enforced, where ignorance prevails, and where any one class is made to feel that society is in an organized conspiracy to oppress, rob, and degrade them, neither persons nor property will be safe.” -Frederick Douglass (Speech on the twenty-fourth anniversary of emancipation in Washington. D.C.) 
+
+“I am an invisible man...I am a man of substance, of flesh and bone, fiber and liquids—and I might even be said to possess a mind. I am invisible, understand, simply because people refuse to see me.” -Ralph Ellison (Invisible Man) 
+
+“Oppressive language does more than represent violence; it is violence; does more than represent the limits of knowledge; it limits knowledge.” -Toni Morrison (Nobel lecture, 1993)
+
+“Ignorance, allied with power, is the most ferocious enemy justice can have.” -James Baldwin (No Name in the Street)
+
+
+
+Emmett
+https://code.visualstudio.com/docs/editor/emmet
+
+jshint extension?
+
+https://teamtreehouse.com/library/introducing-text-editors-going-further
+
+github and vscode sync
+
+inner html?
+
+download project files
+
+
+
+a class in html points to a css style.
+difference between .source and .source:before

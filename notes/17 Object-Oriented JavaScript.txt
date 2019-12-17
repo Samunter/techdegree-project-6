@@ -1,0 +1,346 @@
+INTRODUCTION TO OBJECT-ORIENTED JAVASCRIPT
+
+WELCOME TO OBJECT-ORIENTED JAVASCRIPT
+
+WHAT IS AN OBJECT, AND WHY DO WE CARE?
+
+An object has a state, represented by properties, which are key-value pairs, or object specific variables
+
+An object has behaviors, represented by methods, which are an object's functions
+
+
+
+
+
+
+JAVASCRIPT OBJECTS
+
+dom is an object with methods
+
+arrays are also objects and have methods
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+OBJECT BASICS
+
+OBJECT LITERALS AND COMPONENTS OF OBJECTS
+
+values can be strings, numbers, even functions
+
+one way to add methods to object literals is by declaring a function as a property. The property key is the name of the method
+
+
+
+
+
+
+DOT NOTATION AND BRACKET NOTATION
+
+object.property
+object.method()
+object['property']
+object['method']()
+
+
+
+
+
+
+CHANGING AND ADDING PROPERTIES
+
+Alter properties the same way you would a variable - access it and set it equal to a new value
+
+object.property = newValue
+
+Create new property similarly
+
+object.newProperty = value
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+WORKING WITH CLASSES
+
+WHEN OBJECT LITERALS AREN'T ENOUGH
+
+Aren't great when you want to represent multiples of something with the same or similar properties and methods.
+
+A class is a blueprint for an object, a specification
+
+When you write a class, you provide it with a base set of properties and methods, which are then available on any object created of that class type
+
+
+
+
+
+
+WRITING YOUR FIRST CLASS
+
+look for the things the objects have in common and consider those patterns when deciding on a class
+
+the first letter of the class name is capitalized
+
+A constructor method is the first thing that goes in a class, where you outline properties your class will have. When you call this method, you can pass in parameters like a regular method.
+
+
+
+
+
+
+ADDING PROPERTIES INSIDE THE CONSTRUCTOR METHOD
+
+class Pet {
+  constructor(animal, age, breed) {
+  this.animal = animal;
+  this.age = age;
+  this.breed = breed;
+  }
+}
+
+//Create a class called Pet, build a constructor method. When the constructor is invoked, the values for animal, age, and breed properties can be passed as arguments
+
+
+
+
+
+
+INSTANTIATING A PET OBJECT
+
+const ernie = new Pet('dog', 1, 'pug');
+
+//adds a new object to the Pet class
+
+
+
+
+
+
+ADDING METHODS TO OUR CLASS
+
+Don't use the function keyword when adding methods inside a class.
+
+example:
+
+class Pet {
+  constructor(animal, age, breed, sound) {
+  this.animal = animal;
+  this.age = age;
+  this.breed = breed;
+  this.sound = sound;
+  }
+  
+  speak() {
+    console.log(this.sound);
+  }  
+}
+
+const ernie = new Pet('dog', 1, 'pug', 'yip yip');
+const vera = new Pet('dog', 8, 'border collie', 'woof woof');
+
+ernie.speak();
+vera.speak();
+
+> yip yip
+> woof woof
+
+
+//in order for the speak method to do different things for each new object, we need a new property. so we create the "sound" property, and include it as a parameter in our constructor method. Then, when we instantiate a new object, we pass a sound as our final argument. Then we can call the speak method on any of the objects we've created.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GETTERS AND SETTERS
+
+GETTERS
+
+When a getter method is called, a property value is computed and returned, but this value is not ever updated or stored anywhere. Used for dynamic properties.
+
+example:
+
+//this is inside of a class
+
+  get activity() {
+    const today = new Date();
+    const hour = today.getHours();
+  
+    if (hour > 8 && hour <= 20) {
+      return 'playing';
+    } else {
+      return 'sleeping';
+    }
+
+ernie.activity();
+
+> sleeping
+
+//getter methods are called just like other methods. the activity property is not added directly to the object, so when the object is printed, it does not have "activity" listed
+
+
+
+
+
+
+SETTERS
+
+A setter method receives a value and can perform logic on that value if need be. Then it either updates an existing property with that value or stores the value to a new property.
+
+setters always receive exactly one parameter - the value of the property we'd like to set
+
+
+example: 
+
+//inside a class
+
+  get owner() {
+    return this._owner;
+  }
+  
+  set owner(owner) {
+    this._owner = owner;
+  }
+
+//the name of a property can never be the same as the name of a getter or setter method, so we store the value in a backing property, which has the same name as the setter method but with an underscore before it. However, when we try to access the owner property of an object after setting it, it will return undefined unless we write a getter method to return the backing property.
+
+OBJECT INTERACTION
+
+An object's properties can be another object
+
+
+class Owner {
+  constructor(name, address) {
+    this.name = name;
+    this.address = address;
+  }
+  
+  set phone(phone) {
+    const phoneNormalized = phone.replace(/[^0-9]/g, '');
+    this._phone = phoneNormalized;
+  }
+
+  get phone() {
+    return this._phone;
+  }
+
+}
+
+
+ernie.owner = new Owner('Ashley', '123 Main Street');
+ernie.owner.phone = '(555) 555-5555';
+
+//we created a new class so that an owner object can be created for each pet object. the phone number is not set when calling the class constructor, but by calling the set phone method on the owner property/object of the ernie (or pet) object.
+
+BRINGING IT ALL TOGETHER
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+class Pet {
+  constructor(animal, age, breed, sound) {
+  this.animal = animal;
+  this.age = age;
+  this.breed = breed;
+  this.sound = sound;
+  }
+  
+  get activity() {
+    const today = new Date();
+    const hour = today.getHours();
+  
+    if (hour > 8 && hour <= 20) {
+      return 'playing';
+    } else {
+      return 'sleeping';
+    }
+
+  }
+  
+  get owner() {
+    return this._owner;
+  }
+  
+  set owner(owner) {
+    this._owner = owner;
+    console.log(`setter called: ${owner}`);
+  }
+  
+  speak() {
+    console.log(this.sound);
+  }  
+  
+}
+
+
+class Owner {
+  constructor(name, address) {
+    this.name = name;
+    this.address = address;
+  }
+  
+  set phone(phone) {
+    const phoneNormalized = phone.replace(/[^0-9]/g, '');
+    this._phone = phoneNormalized;
+  }
+
+  get phone() {
+    return this._phone;
+  }
+
+}
+
+
+
+
+
+const ernie = new Pet('dog', 1, 'pug', 'yip yip');
+const vera = new Pet('dog', 8, 'border collie', 'woof woof');
+
+ernie.owner = new Owner('Ashley', '123 Main Street');
+ernie.owner.phone = '(555) 555-5555';
+
+
+
+

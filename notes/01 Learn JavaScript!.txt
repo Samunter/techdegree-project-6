@@ -1,0 +1,113 @@
+var todos = ['item 1','item 2','item 3'];	//array (list)
+
+
+
+//V2
+//It should have a function to display todos
+function displayTodos() {
+	console.log('My Todos:', todos);	//print
+}
+
+//It should have a function to add todos
+function addTodo(todo) {			//todo is a parameter (something the function needs to run). todo will be given a value when the function is called
+	todos.push(todo);			//add an item to an array
+	displayTodos();
+}
+
+//It should have a function to change todos
+function changeTodo(position, newValue) {
+	todos[position] = newValue;		//change an item in an array
+	displayTodos();
+}
+
+//It should have a function to delete todos
+function deleteTodo(position) {
+	todos.splice(position, 1)		//delete items in an array 1 represents the number of items to delete
+	displayTodos();
+}
+//**- Scope. If you’re inside of a function, you can look out and see data
+// (e.g. a variable), but the opposite isn’t true. If you’re outside, you 
+// can’t look in. So, a variable defined within a function cannot be used 
+// outside of that function, it will be undefined.
+
+
+//V3
+var gordon = {					//this is an object
+  name: 'Gordon',				//this is a property
+  sayName: function() {				//a function on an object is a method. This function is anonymous; it doesn't need a name because we use the property name to call the function
+    console.log(this.name);			//"this" is used to refer to the object, this.something is used to refer to some property of the object
+  }
+}
+
+
+
+//V4
+var todoList = {				//this is an object
+
+  todos: [],					//this is a property
+
+  displayTodos: function() {			//this is a method (which is a type of property)
+
+    console.log('My Todos:', this.todos);
+
+  },
+
+  addTodo: function(todoText) {			//this is another method
+
+    this.todos.push({
+
+      todoText: todoText,
+
+      completed: false
+ 
+   });
+
+    this.displayTodos();
+
+  },
+
+  changeTodo: function(position, todoText) {	//methods are called like todoList.changeTodo(0, "changed");
+
+    this.todos[position].todoText = todoText
+
+    this.displayTodos();
+
+  },
+
+  deleteTodo: function(position) {
+
+    this.todos.splice(position,1);
+
+    this.displayTodos();
+
+  },
+
+  toggleCompleted: function(position) {
+
+    var todo = this.todos[position];		//this variable is created to save us from typing on the next line this.todos[position].completed = !this.todos[position].completed
+
+    todo.completed = !todo.completed;		//bang ! means opposite of what comes after it. 
+
+    this.displayTodos();
+
+  }
+
+};
+
+
+
+
+//V5
+//the for loop
+//i = 0			Initialization
+//Say "hey" if i < 3	Condition
+//Increase i by 1	Final-expression
+
+for (var i = 0; i < 3; i++) {			//i++ is the same as i = i + 1
+	console.log("hey");			//this will print "hey" 3 times
+}
+
+var testArray ['item 1', 'item 2', 'item 3'];		
+for (var i = 0; i < testArray.length; i++) {	//instead of 3, we can set the condition to the number of items in an array
+	console.log(testArray[i]);		//prints each item in an array
+}

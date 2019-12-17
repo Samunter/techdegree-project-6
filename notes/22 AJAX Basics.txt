@@ -1,0 +1,289 @@
+AJAX CONCEPTS
+
+INTRODUCING AJAX
+
+Asynchronous Javascript And Xml
+
+AJAX lets you update HTML without loading a new webpage
+
+
+
+
+
+
+HOW AJAX WORKS
+
+technically called an XMLHttpRequest Object (XHR)
+
+AJAX is the process of using JavaScript to send a request to a web server, receive a response back, and then do something with that response.
+
+You use javascript to send out an ajax request, to process the response, and to update the webpage.
+
+asynchronous requests are sent without waiting - javascript will keep running, user can keep interacting with webpage, and only when response come back will the program do something with it. multiple requests can be sent at once, and may come back in a different order.
+
+Extensible Markup Language, XML, was originally seen as the format server responses should be sent in, but it's not the only format you can receive data in.
+
+1) Create an XMLHTTP Request object - tells the web browser to get ready. You want to send an AJAX request and the web browser needs to create an object that has all the methods you'll need to send and receive data.
+2) Create a callback function. This is the programming you want to run when the server returns its response. The callback is where you process the returned data and update the HTML on the page
+3) Open a request. In this step, you give the browser two peices of information: the method the browser will use to send the request (get or post usually), and the URL where the request is sent.
+4) Send the request. The previous steps gave the browser all the info it needs to send the request to the web server.
+
+
+
+
+
+
+A SIMPLE AJAX EXAMPLE
+
+Using plain javascript to load a chunk of HTML into a page using AJAX
+
+  <script>
+    var xhr = new XMLHttpRequest();
+  </script>
+
+//tells the browser to get ready to work with AJAX. Create a new XHR object for each ajax request.
+
+AJAX comes with its own set of events. The most important is the onreadystatechange event - triggered whenever there's a change in an AJAX request (opening a new request, sending it, or receiving a response).
+
+  xhr.onreadystatechange = function() {callback}
+
+//callback will run anytime the XMLHttpRequest state changes
+
+The XMLHttpRequest Object keeps track of the state using a special property named ready state. That property contains a number including the current state. When that number is 4, then the request is done and the server has sent back a response.
+
+  if (xhr.readyState === 4) {callback}
+
+//callback will only run when the XMLHttpRequest has change to the final state (it has received a response)
+
+The full AJAX response will be a chunk of HTML. We want to place it into the web page. Every XMLHttpRequest object has a property called response text, which is the info that the web server sends back.
+
+  document.getElementById('ajax').innerHTML = xhr.responseText
+
+an XHR object has a method called open. this function prepares the browser for sending the request. You give the function two pieces of information: the HTTP method (get, post, etc) and the URL where the request is going. The URL can be a file or a server-side program on your web server.
+
+  xhr.open('GET', 'sidebar.html');
+
+//we're using 'get' because we want to retrieve information. sidebar.html is just a file in the workspace.
+
+An XHR object also has a method called send. With a get request, it has no arguments. But when you need to submit info to the server, you can pass that data into the send method.
+
+  xhr.send();
+
+
+
+  <script>
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        document.getElementById('ajax').innerHTML = xhr.responseText;
+      }
+    };
+    xhr.open('GET', 'sidebar.html');
+    xhr.send();
+  </script>
+
+
+
+
+
+
+GET AND POST
+
+If you need specific information, you may need to send data to the server in your get request. This is added to the URL in the form of a query string (?name=value&name=value). Special characters may need to be converted.
+
+Post sends info differently, in what's called the body of the request.
+
+
+
+
+
+
+AJAX RESPONSE FORMATS
+
+extensible markup language, xml. Similar to html and uses tags to structure data.
+
+json
+
+
+
+
+
+
+AJAX SECURITY LIMITATIONS
+
+can use ajax to communicate from one page to another on the same web server, but not to access other web servers.
+
+to avoid this you can set up a web proxy, with your server talking to other servers
+
+or, you can use jsonp, json with padding. not traditional ajax, relies on the ability to link to javascript files across domains.
+
+CORS or Cross-Origin Resource Sharing.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+PROGRAMMING AJAX
+
+INTRODUCING THE PROJECT
+
+Want to be able to take the response and convert it into the html that the designer created.
+
+
+
+
+
+
+AJAX CALLBACKS
+
+the XMLHttpRequest object has a status property, which is a number sent from the server. 200 means okay, and is the standard response for a successful HTTP request.
+
+the XHR object also has a statusText property, which is a message that accompanies the status.
+
+if (xhr.readyState === 4) {
+  if (xhr.status === 200) {
+    document.getElementById('ajax').innerHTML = xhr.responseText;
+  } else {
+    alert(xhr.statusText);
+  }
+}
+
+
+
+
+
+
+INTRODUCING JSON
+
+JavaScript Object Notation. It uses basic javascript arrays and objects to store data. All strings must be in double quotes
+
+To determine whether your json is valid, you can use an online validator like JSONLint at jsonlint.com
+
+
+
+
+
+
+PARSING JSON DATA
+
+response is always a string, even if formatted like javascript. can check the type of something with javascript's "typeof" followed by the thing.
+
+JSON.parse() is a method that is built into all current web browsers. It takes a string and converts it into a javascript object.
+
+
+
+
+
+
+PROCESSING JSON DATA
+
+var xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function() {
+  if(xhr.readyState === 4) {
+    var employees = JSON.parse(xhr.responseText); // this returns a javascript object
+    var statusHTML = '<ul class="bulleted">'; // starts building html
+    for(let i = 0; i<employees.length; i++) {
+      if (employees[i].inoffice) {
+        statusHTML += '<li class="in">'; // adds an li with the class "in" if the inoffice property is true
+      } else {
+        statusHTML += '<li class="out">'; // adds an li with the class "out" if the inoffice property is false
+      }
+      statusHTML += employees[i].name; // adds the employee name to the li's inner html
+      statusHTML += '</li>'; // closes the li
+    }
+    statusHTML += '</ul>'; // closes the ul
+    document.getElementById('employeeList').innerHTML = statusHTML; // adds created html to a div with the id "employeeList"
+  }
+};
+xhr.open('GET', 'data/employees.json');
+xhr.send();
+
+// this builds html with an li for each employee with a class of "in" or "out"
+
+html looks like this:
+
+<ul class="bulleted">
+  <li class="out">Aimee</li>
+  <li class="in">Andrew</li>
+  ...
+</ul>
+
+
+
+
+
+
+PROGRAMMING AJAX CHALLENGE
+
+../data/rooms.json
+
+<ul class="rooms">
+  <li class="full">101</li>
+  <li class="empty">102</li>
+  ...
+</ul>
+
+div id="roomList"
+
+
+
+
+
+
+PROGRAMMING AJAX SOLUTION 
+
+var request = new XMLHttpRequest();
+request.onreadystatechange = function() {
+  //this line makes sure we've received an "ok" response
+  if(request.readyState === 4 && request.status === 200) {
+    //this turns the response string into a js object
+    var rooms = JSON.parse(request.responseText);
+    //begin building the html
+    var roomHTML = '<ul class="rooms">';
+    for (let i = 0; i < rooms.length; i++) {
+      if (rooms[i].available) {
+        //if available is true, the room li is given the empty class
+        roomHTML += '<li class="empty">';
+      } else {
+        roomHTML += '<li class="full">';
+      }
+      roomHTML += rooms[i].room;
+      roomHTML += '</li>';
+    }
+    roomHTML += '</ul>';
+    //places our html inside a div with the id roomList
+    document.getElementById('roomList').innerHTML = roomHTML;
+  }
+};
+//the rooms.json file is located within the data folder within the parent folder (parent of our current folder)
+request.open('GET', '../data/rooms.json');
+request.send();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

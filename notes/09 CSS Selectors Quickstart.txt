@@ -1,0 +1,303 @@
+CSS SELECTOR BASICS
+
+TYPE SELECTORS
+
+p {
+    color: red;
+}
+
+button {
+    font-size: 36px;
+}
+
+
+
+
+
+
+ID SELECTORS
+
+should be unique to a particular element
+
+<div id="main-content">...</div>
+
+#main-content {
+    border: 2px dotted tomato;
+}
+
+
+
+
+
+
+CLASS SELECTORS
+
+<img class="img-user" src="user-035.jpg" alt="cool user" />
+
+.img-user {
+  width: 80px;
+  border-radius: 50%;
+}
+
+
+
+
+
+
+ATTRIBUTE SELECTORS
+
+attribute could be class, id, anything
+
+[title] {
+  color: indigo;
+}
+
+div[title] {
+  padding: 15px;
+}
+
+div[title="Tooltip"] {
+  border: 1px solid lemonchiffon;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+PSEUDO-CLASSES AND COMBINATORS
+
+THE POWER OF PSEUDO-CLASSES AND COMBINATORS
+
+Elements on a webpage have different states. for example, links and buttons have a hover state as well as active and focus states. and text fields also have a focus state. css provides pseudo class selectors that match html elments based on their state and a users actions. for example select a button as a user hovers their mouse over it and change its background and text color. a pseudo class is a keyword added to a selector that specifies a special state of the selected element(s). pseudo classes not only target elements dynamically bsed on their state, but also on their positoin in a group of sibling elements and more. you've leraned how to target one element or a set of matching elements at a time using type, id, and class selectors. in this stage you're also going to learn how css gives you a more fine-grained approach to targeting elements with combinators. they select elements based on how they are related to one another. for example, a comvinator can target a specific descendant of an element, only elements that are direct children of a parent, or an immediate sibling element and general siblings that follow a specific type of element. in the next step, you'll start by working with dynamic pseudo classes. on we go!
+
+
+
+
+
+
+
+PSEUDO-CLASSES
+
+ddynamic pseudo classes target elements in response to user action.
+
+:hover
+
+:link
+targets unvisited links, selects only anchor elements (<a> tags) that have an href attribute
+
+	a:link {
+	    color: darkorange;
+	}
+
+:visited
+targets links that have been clicked
+
+:active
+activation typically starts when the user presses down the mouse button
+
+
+
+
+
+
+
+
+
+DESCENDENT SELECTORS
+
+You define a descendant selectors using two or more selectors separated by whitespace
+
+
+target span element within header:
+
+header span {
+    color: darkviolet;
+}
+
+
+not limited to type selectors - can use class, id...
+
+#main-nav a {}
+
+.main-header .headline {}
+
+
+
+
+
+
+
+CSS COMBINATORS
+
+CSS combinators describe the relationship between two or more elements. Combinators make your selectors more specific, and give you the flexibility to target an element's siblings, descendants, and direct children.
+
+For example, the whitespace between a descendant selector is considered a combinator
+
+
+>
+child combinator. used to target DIRECT child elements (one nest deep)
+ul > li targets <li> tags directly nested inside <ul>
+
+
++
+adjacent sibling combinator
+img + p targets any <p> element that immediately follows an <img> element
+.btn + .btn targets a .btn class that immediately follows an element with a .btn class
+
+
+~
+general sibling combinator
+header ~ div targets any <div> elements that follow <header> (not any that precede it)
+
+
+
+
+
+
+
+:FIRST-CHILD AND :LAST-CHILD PSEUDO-CLASSES
+
+:first-child targets the first element among a group of sibling elements
+
+:last-child targets the last child of its parent
+
+the name of the element itself goes before the colon, not its parent
+
+
+
+
+
+
+
+:NTH-CHILD() PSEUDO-CLASS
+
+li:nth-child(odd) {}
+
+li:nth-child(3) {}
+
+when calculating the position of an element inside its parent, numbering starts at 1
+
+the name of the element itself goes before the colon, not its parent
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+THE ROLE OF SELECTORS IN JAVASCRIPT
+
+CSS SELECTORS AND JAVASCRIPT
+
+you've learned anough about css selectors to change the appearance of webpages, but why is it also important that you understand selecotrs when working with javascript? as you've learned, selectio is a way to id an element for a browser so the broswer can find it and make it available for us to manipulate, for example target a visited linkand change its text color to azuer. you also use selectors in javascript when writing code that works with the DOM. just like css selectors control the appearance of elements on a wepage, selectors are used in js to let you control an elements bx and apply functionality to the page. there are lots of tasks you can perform once you select an element with js, like read its content and manipulate it in many ways. js provides methods that let you select and retrieve elemtns from the dom by matchin gagainst one or a set of selectors. you can select html elements based on their id, class, type, attributes and value and more. for instance the get element by id method tarets and element whose id value matches the id selector you include between the parentheses. notce the sleectors past the methods here in the mdn docs. what you pass into many of js selection methods is the same as a css selector. other selection methods, like query selector and query selector all accept class, element, and attribute selectors, as well as the pseudo classes and combinators you learned earlier to determine what element or elements should be returned. you don't need to worry aout what all this js code means yet, you'll learn about htem in a later course about js and the dom, i just wanted to show you some examples of how selectors get applied in js. so coming up in this stage we'll have a deeper look at the role of css selectors in js and go over tips for naming your selectors and working with selectors in js.
+
+
+
+
+
+
+
+CONTROL ELEMENTS WITH JAVASCRIPT AND SELECTORS
+
+there are basic tasks you can do once you select an element with javascript
+
+- read or get an element's content and attributes
+
+- modify an element's content and attributes
+
+- create new html elements
+
+- respond to user events
+
+
+
+
+
+
+
+PREFIX CLASSES FOR JAVASCRIPT
+
+It's recommended that you do not share the same selector with CSS and JavaScript. For instance, if you're selecting an element with JavaScript, avoid relying on a selector that's also used in your CSS.
+
+If a class is going to be used by JavaScript only, it's common to use a dedicated prefix, like js-. 
+
+
+<button class="btn-lg js-modal">Click Me!</button>
+
+Use the class .btn-lg to apply styling to the button
+
+Use the class .js-modal to target the button and apply functionality with JavaScript
+
+
+
+
+
+
+
+CUSTOM DATA ATTRIBUTES
+
+HTML provides custom data- attributes that allow you to store extra information on any element. Data attributes are regular HTML attributes that begin with the data- prefix followed by a custom name.
+
+target in css:
+
+[data-topic="javascript"] {}
+
+target in js:
+
+document.querySelector('[data-toggle-controller]');
+
+This separates concerns: the class has the job of styling, and the data- attribute has the job of providing functionality with JavaScript. That way, if you ever need to change a class name, it's not going to affect the JavaScript.
+
+
+
+
+
+
+
+NEXT STEPS WITH CSS SELECTORS AND JAVASCRIPT
+
+best practices for working with css selectors and js
+
+If you're sure that only one element needs to match your selector, selecting by ID should be OK. If you're unsure, or think that at some point you might need to share styles or functionality with multiple elements, then it's best to use a class or data-* attribute.
+
+Naming classes can be challenging. Developers often use a naming convention like BEM (Block, Element, Modifier) to make their code scalable, reusable and predictable. With BEM, you describe the markup in terms of blocks, elements and modifiers.
+
+
+
+
+
+
+
+
+
+the DOM allows javascript to interact with and make changes to elements on a webpage
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,142 @@
+
+
+acessing a value in an object in an array
+arrayName[i].key
+
+
+for/in loop for objects
+for (var key in objectName) {
+  console.log(key);
+}
+logs each key name to the console
+
+to log the value associated with the key
+for (var key in objectName) {
+  console.log(objectName[key]);
+}
+
+function print(message) {
+  var outputDiv = document.getElementById('output');
+  outputDiv.innerHTML = message;
+};
+
+arrays can hold strings, numbers, boolean values, arrays, any combination
+2 dimensional array: list containing other lists
+
+
+array methods!
+-.push() adds to the end of an array
+-.pop() removes from the end of an array
+-.shift() removes from the start (heavier computing power)
+-.unshift() adds to the start (heavier computing power)
+-join takes an array and returns a string with all the items separated by a supplied character (comma, colon)
+	- array.join(', ');
+-concat to add one list to another
+	- firstArray.concat(secondArray);
+-indexOf allows you to search an array for a particular value. if the value is in the list, then that element's position is returned. If it is not, then -1 is returned.
+	- array.indexOf('particular value');
+
+
+variables
+prompt method
+concatenation!
+Math.random, Math.floor
+if, else if, else, true/false confusion
+if and/or
+comments
+functions
+
+while, do while, for loops, starting at 0
+arrays, indices
+methods
+
+
+
+var secret;
+var correctSecret = false;
+
+do {
+  secret = prompt("What is the secret password?");
+  if ( secret === "sesame") {
+    correctSecret = true;
+  }
+} while ( !correctSecret );
+document.write("You know the secret password. Welcome.");
+
+
+
+
+document.write( "<p>The random number was: " + randomNumber + "<p>" );
+document.write( "<p>It took the computer " + attempts + " attempts to guess it.</p>" );
+
+var randomNumber = Math.floor(Math.random() * (topNumber - bottomNumber +1)) + bottomNumber;
+
+function randomNumber(upper) {
+  return Math.floor( Math.random() * upper ) + 1;
+}
+var counter = 0;
+while ( counter < 10 ) {
+  var randNum = randomNumber(6);
+  document.write( randNum + " " );
+  counter += 1; 
+}
+
+vs
+
+function randomNumber(upper) {
+  return Math.floor( Math.random() * upper ) + 1;
+}
+var counter = 0;
+while ( counter < 10 ) {
+  document.write( randomNumber(6) + " " );
+  counter += 1; 
+}
+
+
+pizza /= 8;
+same as
+pizza = pizza / 8;
+
+Math.random() returns between 0-1, inclusive of 0 but not 1
+* 6 returns from 0 to over 5
+includes decimals - Math.floor rounds down, Math.ceil rounds up
+Use Math.floor because there is a small chance of random number being 0
+Then add 1
+Math.floor( Math.random() * 6 ) + 1
+
+
+source of js info mozilla developer network
+
+message = message + asdflkjasdf
+same as
+message += asdflkjasdf
+
+escape character \ can be used before a character to treat it as just a character (?)
+
+3 ways to write messages!
+alert("message");
+document.write("also a message");
+console.log("yep still a message");
+
+Chrome Console Shortcut
+   Ctrl + Shift + J
+
+Read and display content using html, style that html following css rules, and add interactivity to a page by following the instructions in a js program
+
+You can place the script tags almost anywhere in a webpage, but most commonly it's either in the head of the page, usually just before the closing head, or within the body of the page, just before the closing body tag. One advantage of placing your script near the bottom of the page is it lets the browser load and display any html before running the javascript.
+
+
+Review
+Link a JavaScript file to a web page using the <script> tag and the src property: 
+<script src="scripts.js"></script>
+
+Insert JavaScript directly into a web page inside <script> tags:
+<script>
+alert("Hello there.");
+</script>
+
+Never link to a file and include JavaScript inside the same <script> tag.
+Don't do this:
+<script src="file.js">
+   alert("Hello there.");
+</script>

@@ -1,0 +1,760 @@
+WHAT IS ASYNCHRONOUS PROGRAMMING?
+
+INTRODUCTION TO ASYNCHRONOUS JAVASCRIPT
+
+JavaScript can only do one task at a time (single-threaded), and usually needs to complete those tasks in order. If one of them stalls, the whole program stalls.
+
+
+
+
+
+
+UNDERSTANDING SYNCHRONOUS AND ASYNCHRONOUS CODE
+
+javascript can still only do one thing at a time, but it doesn't need to wait for the previous step to complete before starting on another step.
+
+
+
+
+
+
+EXAMPLES OF SYNCHRONOUS AND ASYNCHRONOUS CODE
+
+A while loop that waits 8 seconds would block user interaction with the page
+
+setTimeout() would allow user interaction to continue, and when 8 seconds pass, the callback function would be run
+
+
+
+
+
+
+THE JAVASCRIPT CALL STACK
+
+the call stack keeps track of the order of funciton calls - it manages the current function that's being called, any functions called from within that function, and functions that follow. The call stack processes only one function at a time.
+
+The call stack handles asynchronous tasks in a different way than synchronous tasks. Whenever the JavaScript environment encounters code that needs to run and execute at a later time, like a setTimeout() callback or a network request, that code is handed off to a special Web API that processes the async operation. Meanwhile, the call stack moves on to other tasks then revisits the async task when it's ready to be dealt with.
+
+Where does the async callback go before being pushed onto the call stack? It doesn't immediately go back into the call stack. Instead the callback gets pushed into something called the callback queue.
+
+
+
+
+ 
+
+THE CALLBACK QUEUE AND EVENT LOOP
+
+The web API hands off the callback function to the callback queue, then to the call stack where it is executed.
+
+Anytime the call stack is empty, the event loop takes the first task from the callback queue and pushes it onto the call stack, and runs it.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ASYNCHRONOUS JAVASCRIPT WITH CALLBACKS
+
+INTRODUCING THE PROJECT
+
+You'll practice writing asynchonous javascript by creating a simple API mashup, meaning a site or app that's created using two data sources. In this case, the Open Notify API and the Wikipedia API.
+
+Three things happen when a user clicks the button:
+1) make a request to the open-notify.org API, which returns the current number of people in space, including their names and the spacecraft they're on.
+2) that data will be used to make a second request, this time to the summary endpoint of the Wikipedia API to get more data about each astronaut, like their picture, bio, and title.
+3) finally, it's going to display each astronaut on the page using the data returned from both APIs.
+
+
+
+
+
+
+CALLBACKS REVIEW
+
+A callback function is one that is passed to another (parent) function as an argument.
+
+the add function below accepts a function as its third argument (via the parameter callback). When add is invoked, the function passed to it logs the sum of the values passed in for a and b.
+
+
+function add(a, b, callback) {
+  callback(a + b);
+}
+
+add(2, 4, function(sum) {
+  console.log(sum); // 6
+});
+
+
+In the following example, the function getUserName accepts a function as an argument (via the parameter callback). The greeting function passed to getUserName is invoked after prompt() captures a name and stores it in the variable name.
+
+
+function getUserName(callback) {
+  const name = prompt('What is your name?');
+  callback(name);
+}
+
+function greeting(name) {
+  alert('Hello, ' + name);
+}
+
+getUserName(greeting); // a reference to the greeting function is passed to the function
+
+
+With callbacks, you can also create a chain of function calls (or a sequence of tasks) where one task runs after another is completed. This is referred to as continuation-passing style (CPS).
+
+
+function add(x, y, callback) {
+  callback(x + y)
+}
+function subtract(x, y, callback) {
+  callback(x - y);
+}
+function multiply(x, y, callback) {
+  callback(x * y);
+}
+function calculate(x, callback) {
+  callback(x);
+}
+
+calculate(5, (n) => {
+  add(n, 10, (n) => {
+    subtract(n, 2, (n) => {
+      multiply(n, 5, (n) => {
+        console.log(n); // 65
+      });
+    });
+  });
+});
+
+
+
+
+
+
+ASYNC PROGRAMMING AND CALLBACK FUNCTIONS
+
+IMLEMENT A CALLBACK
+
+STEPPING THROUGH ASYNC CODE
+
+MANAGING NESTED CALLBACKS
+
+const astrosUrl = 'http://api.open-notify.org/astros.json';
+const wikiUrl = 'https://en.wikipedia.org/api/rest_v1/page/summary/';
+const peopleList = document.getElementById('people');
+const btn = document.querySelector('button');
+
+// Make an AJAX request
+function getJSON(url, callback) {
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', url);
+  xhr.onload = () => {
+    if(xhr.status === 200) {
+      let data = JSON.parse(xhr.responseText);
+      return callback(data);
+    }
+  };
+  xhr.send();
+}
+
+// Generate the markup for each profile
+function generateHTML(data) {
+  const section = document.createElement('section');
+  peopleList.appendChild(section);
+  section.innerHTML = `
+    <img src=${data.thumbnail.source}>
+    <h2>${data.title}</h2>
+    <p>${data.description}</p>
+    <p>${data.extract}</p>
+  `;
+}
+
+btn.addEventListener('click', () => {
+  getJSON(astrosUrl, (json) => {
+    json.people.map( person => {
+      getJSON(wikiUrl + person.name, generateHTML);
+    });
+  });
+});
+
+//The getJSON function takes a callback, and that callback takes the parameter "data", which is defined in the parent (getJSON) function each time it is ran. So the first time calling getJSON, data is defined as the parsed JSON from the astrosURL. The anonymous callback function takes this "data" variable but renames it "json". Then within this anonymous callback, we make another AJAX request for EACH astronaut using getJSON. For each astronaut, the generateHTML function is used as the callback, and "data" is defined as the parsed JSON for that specific astronaut.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+UNDERSTANDING PROMISES
+
+WHAT IS A PROMISE?
+
+A promise represents the eventual completion of an asynchronous operation. In other words, a value that may not be available yet, like data requested from a server.
+
+While a callback may leave us with some uncertainties about that value, a promise will promise or guarantee a future value and nothing can change it.
+
+
+
+
+
+
+CREATE A PROMISE
+
+Promise states:
+- pending
+- fulfilled
+- rejected
+
+Promise sequence:
+1) create a promise instance using the Promise() constructor
+2) define what should happen when the promise is fulfilled or rejected
+3) call one of the methods provided by the promise API to eihter comsume the value of a fulfilled promise, or provide a rejection reason for a rejected promise
+
+the promise constructor takes one argument, a callback with 2 parameters, resolve and reject. within the callback we write an async task. this function is going to return a promise object that is either pending, resolved, or rejected (pending by default). Inside the constructor, we can either call resolve to return a promise object that is resolved with a given value, or reject to return a promise object that is rejected with a given reason. Both of these functions are provided by the constructor. We can pass resolve a value which then becomes the fulfillment value of the promise. We need to get the value out of the promise object, or consume the promise. The Promise API offers methods you can call on the promise.
+
+The .then() method can be called to handle both fulfilled and rejected promises. It accepts two functions as its arguments, the first for fulfilled promises and an optional one for rejected promises. If the fulfilled promises function has a parameter, it will be the fulfillment value defined in the resolve method.
+
+
+const breakfastPromise = new Promise( (resolve, reject) => {
+  setTimeout( () => {
+    resolve('Your order is ready. Come and get it!');  
+  }, 3000);
+});
+
+console.log(breakfastPromise);
+breakfastPromise.then( val => console.log(val) )
+
+> Promise { <pending> }
+> (3 sec pause...)
+> Your order is ready. Come and get it!
+
+
+
+
+
+
+REJECT A PROMISE AND HANDLE ERRORS
+
+If an error occurs, the promise status changes from pending to rejected. The Promise API also has a reject method, which takes an argument, the rejection reason.
+
+the .catch() method deals with rejected cases only, and can be chained behind the .then() method. .catch() accepts a function. This function takes an argument, which is the rejection reason or the error message to display.
+
+const breakfastPromise = new Promise( (resolve, reject) => {
+  setTimeout( () => {
+    reject('Oh no! There was a problem with your order.');  
+  }, 3000);
+});
+
+console.log(breakfastPromise);
+breakfastPromise.then( val => console.log(val) ).catch( err => console.log(err) )
+
+> Promise { <pending> }
+> (3 sec pause...)
+> Oh no! There was a problem with your order.
+
+
+
+const order = false;
+
+const breakfastPromise = new Promise( (resolve, reject) => {
+  setTimeout( () => {
+    if (order) {
+      resolve('Your order is ready. Come and get it!');
+    } else {
+      reject('Oh no! There was a problem with your order.');
+    }
+  }, 3000);
+});
+
+console.log(breakfastPromise);
+breakfastPromise
+  .then( val => console.log(val) )
+  .catch( err => console.log(err) )
+
+//If order is true, the fulfillment value is logged to the console. If false, the rejection reason is logged.
+
+
+
+
+
+
+PROMISES REVIEW
+
+A promise is a regular JavaScript object that changes from a pending state to either a fulfilled or rejected state
+
+You're able to call methods on the Promise object, like then() and catch()
+
+When the status of a promise changes to resolved, the function passed to then() gets called
+
+When the status changes to rejected, the function passed to catch() is invoked
+
+It's best to specify a rejection reason and call catch() on a promise – if you don’t, the promise will silently fail
+
+
+
+Remember: .then() itself always returns a new promise. So you're able to call .then() more than once on the same promise. In other words, by chaining multiple thens together, you can transform values or run additional async operations one after another.
+
+A promise sequence will pass values down the chain, from one then() call to the other, unless there's an error.
+
+
+
+
+
+
+FROM CALLBACKS TO PROMISES
+
+because .then() always returns a new promise, we don't need a callback argument in the AJAX request
+
+
+//places the http request within a promise.
+function getJSON(url) {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', url);
+    xhr.onload = () => {
+      if(xhr.status === 200) {
+        let data = JSON.parse(xhr.responseText);
+        resolve(data);
+      } else {
+        reject( Error(xhr.statusText) );
+      }
+    };
+    xhr.onerror = () => reject( Error('A network error occurred') );
+    xhr.send();                 
+  });
+}
+
+//map transforms the json of astronaut names into an array of promise objects
+function getProfiles(json) {
+  const profiles = json.people.map( person => {
+    return getJSON(wikiUrl + person.name);      
+  }); 
+  return profiles;
+}
+
+//.then() takes the result of the promise in getJSON (defined with resolve and reject within the getJSON function) and passes that result as an argument to the function given to .then().
+btn.addEventListener('click', (event) => {
+  getJSON(astrosUrl)
+    .then(getProfiles)
+    .then( data => console.log(data) )
+    .catch( err => console.log(err) )
+  event.target.remove();
+});
+
+
+//"The getProfiles function returns the array of promise objects assigned to the variable "profiles", which get created by the map method.
+
+
+
+HANDLE MULTIPLE PROMISES WITH PROMISE.ALL
+
+Javascript promises provide an efficient way to fire off and keep track of multiple asynchronous operations with the Promise.all() method. Promise.all() is useful when your program needs to wait for more than one promise to resolve.
+
+Promise.all() accepts an iterable such as a string or an array. You'll usually pass it an array of promises. 
+
+Promise.all() is going to wait for all the individual promise objects, then joins them into one and returns a value when all the specified promises are fulfilled.
+
+
+
+
+
+
+PERFORM CLEANUP WITH FINALLY()
+
+finally() gets called once a promise is fully settled. regardless of whether the promise if fulfilled or rejected, the callback function passed to it gets executed.
+
+
+
+const astrosUrl = 'http://api.open-notify.org/astros.json';
+const wikiUrl = 'https://en.wikipedia.org/api/rest_v1/page/summary/';
+const peopleList = document.getElementById('people');
+const btn = document.querySelector('button');
+
+function getJSON(url) {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', url);
+    xhr.onload = () => {
+      if(xhr.status === 200) {
+        let data = JSON.parse(xhr.responseText);
+        resolve(data);
+      } else {
+        reject( Error(xhr.statusText) );
+      }
+    };
+    xhr.onerror = () => reject( Error('A network error occurred') );
+    xhr.send();                 
+  });
+}
+
+function getProfiles(json) {
+   const profiles = json.people.map(person => {
+
+   if (person.name == "Alexander Skvortsov") {
+       person.name = "Aleksandr_Skvortsov_(cosmonaut)"
+   }
+
+   if (person.name == "Andrew Morgan") {
+       person.name = "Andrew_R._Morgan"
+   }
+
+   return getJSON(wikiUrl + person.name);
+  });
+  return Promise.all(profiles);
+}
+
+function generateHTML(data) {
+  data.map( person => {
+    const section = document.createElement('section');
+    peopleList.appendChild(section);
+    section.innerHTML = `
+      <img src=${person.thumbnail.source}>
+      <h2>${person.title}</h2>
+      <p>${person.description}</p>
+      <p>${person.extract}</p>
+    `;
+  });
+}
+
+btn.addEventListener('click', (event) => {
+  event.target.textContent = "Loading...";
+  
+  getJSON(astrosUrl)
+    .then(getProfiles)
+    .then(generateHTML)
+    .catch( err => {
+      peopleList.innerHTML = '<h3>Something went wrong!</h3>';
+      console.log(err)
+    })
+    .finally( () => event.target.remove() )
+});
+
+//we were getting an array of multiple resolved promise objects from getProfiles(). Promise.all() returns a single resolved promise, an array containing the Wikipedia profiles as objects.
+
+
+
+************************************************************************************************************************************************************************************************************************************************************************
+
+My questions:
+
+when does .then() return a promise object and when does it return the fulfillment value. I tried looking at MDN but find promises kind of confusing, so maybe you could look at MDN with me
+
+I don't understand the getProfiles() function in the code I sent you. It was returning an array of resolved promise objects. then when we return Promise.all(profiles) it returns an array of Wikipedia profiles.
+************************************************************************************************************************************************************************************************************************************************************************
+
+
+
+USING FETCH
+
+ES2015 introduced a more elegant and friendlier data fetching interface that's native to the browser called the fetch API. Fetch uses JavaScript promises to let you handle the results returned from the server.
+
+To make a fetch request, you use the global fetch() method. Fetch takes one mandatory argument, the path to the resource you want to fetch.
+
+The fetch method itself returns a promise, and once fetch makes the request and the data finishes loading, the fetch promise is fulfilled. It's also going to return a response object containing information about the response, like the status code and the corresponding status message. In order to access and use the data, we need to parse it to JSON first. You can do this with .then(), pass it a function that accepts the response via a parameter, and parse it to JSON with .json()
+
+.then( response => response.json() ) 
+
+response.json() is going to read the response and returns a promise that resolves to a JSON response object.
+
+
+
+
+const astrosUrl = 'http://api.open-notify.org/astros.json';
+const wikiUrl = 'https://en.wikipedia.org/api/rest_v1/page/summary/';
+const peopleList = document.getElementById('people');
+const btn = document.querySelector('button');
+
+function getProfiles(json) {
+   const profiles = json.people.map(person => {
+   const craft = person.craft;
+
+   if (person.name == "Alexander Skvortsov") {
+       person.name = "Aleksandr_Skvortsov_(cosmonaut)"
+   }
+
+   if (person.name == "Andrew Morgan") {
+       person.name = "Andrew_R._Morgan"
+   }
+
+   return fetch(wikiUrl + person.name)
+          .then( response => response.json() )
+          .then( profile => {
+            return { ...profile, craft };
+          })
+          .catch( err => console.log('Error Fetching Wiki: ', err) )
+  });
+  return Promise.all(profiles);
+}
+
+function generateHTML(data) {
+  data.map( person => {
+    const section = document.createElement('section');
+    peopleList.appendChild(section);
+    section.innerHTML = `
+      <img src=${person.thumbnail.source}>
+      <span>${person.craft}</span>
+      <h2>${person.title}</h2>
+      <p>${person.description}</p>
+      <p>${person.extract}</p>
+    `;
+  });
+}
+
+btn.addEventListener('click', (event) => {
+  event.target.textContent = "Loading...";
+  
+  fetch(astrosUrl)
+    .then( response => response.json() )
+    .then(getProfiles)
+    .then(generateHTML)
+    .catch( err => {
+      peopleList.innerHTML = '<h3>Something went wrong!</h3>';
+      console.log(err)
+    })
+    .finally( () => event.target.remove() )
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+EXPLORING ASYNC/AWAIT
+
+WHAT IS ASYNC/AWAIT?
+
+Async/await and promises are fundamentally the same under the hood.
+
+the keyword async defines an asynchronous function. You can mark any JavaScript function with async. Inside of an async funciton, you use the await keyword to wait for a promise to resolve, and to return its fulfillment value. The response object is assigned to the variable response. The next step is to parse the response to json. This task is also asynchronous and returns a promise 
+
+
+async function fetchData(url) {
+  const response = await fetch(url);
+  const data = await response.json();
+  
+  return data;
+}
+
+
+an async function always returns a promise. that promise resolves with the value returned by the async function, or rejects with an error thrown from within the function.
+
+ex:
+
+fetchData('dog.ceo/dog-api/breeds')
+
+the data returned by the fetchData function is wrapped in a promise. One way to access the data is to chain a then method onto the function call, just like you normally would when working with promises or a fetch API.
+
+
+
+
+
+
+CONVERT PROMISE HANDLING TO ASYNC/AWAIT
+
+The await keyword is going to wait for a resolved promise returned by fetch, then it's going to get the fulfillment value out of the promise and assign it to the variable
+
+any code that calls await needs to be wrapped in an async function
+
+use the Promise.all() method to wait on all of those individual promises to resolve, then join them into a single promise that gets resolved when all are fulfilled.
+
+the value of Promise.all() is the result of each of the map calls
+
+
+
+const astrosUrl = 'http://api.open-notify.org/astros.json';
+const wikiUrl = 'https://en.wikipedia.org/api/rest_v1/page/summary/';
+const peopleList = document.getElementById('people');
+const btn = document.querySelector('button');
+
+// Handle all fetch requests
+async function getPeopleInSpace(url) {
+  const peopleResponse = await fetch(url);
+  const peopleJSON = await peopleResponse.json();
+  
+  const profiles = peopleJSON.people.map( async (person) => {
+    const craft = person.craft;
+                                         
+                                         
+    if (person.name == "Alexander Skvortsov") {
+       person.name = "Aleksandr_Skvortsov_(cosmonaut)"
+    }
+
+    if (person.name == "Andrew Morgan") {
+       person.name = "Andrew_R._Morgan"
+    }
+  
+    const profileResponse = await fetch(wikiUrl + person.name);
+    const profileJSON = await profileResponse.json();
+  
+    return {...profileJSON, craft};
+  });
+
+  return Promise.all(profiles);
+}
+
+// Generate the markup for each profile
+function generateHTML(data) {
+  data.map( person => {
+    const section = document.createElement('section');
+    peopleList.appendChild(section);
+    section.innerHTML = `
+      <img src=${person.thumbnail.source}>
+      <span>${person.craft}</span>
+      <h2>${person.title}</h2>
+      <p>${person.description}</p>
+      <p>${person.extract}</p>
+    `;
+  });
+}
+
+btn.addEventListener('click', async (event) => {
+  event.target.textContent = "Loading...";
+  
+  const astros = await getPeopleInSpace(astrosUrl);
+  generateHTML(astros);
+  event.target.remove();
+});
+
+//getPeopleInSpace is going to return the array of promise objects captured in the variable profiles
+
+
+
+
+
+
+COMBINE ASYNC/AWAIT WITH PROMISES
+
+because async always returns a promise, we can combine async/await with traditional promises.
+
+
+
+btn.addEventListener('click', (event) => {
+  event.target.textContent = "Loading...";
+  
+  getPeopleInSpace(astrosUrl)
+    .then(generateHTML)
+    .finally( () => event.target.remove() );
+});
+
+
+
+
+
+
+ERROR HANDLING WITH TRY...CATCH
+
+since async/await functions are promises, we can use .then(), .catch(), and .finally() with them.
+
+When an error occurs, catch gets an error object containing the details about the error. In the catch block we use a throw statement to rethrow an exception after it's caught by catch. Throw is followed by the exception or error object. The benefit of doing this is that any errors caught here will bubble up and be caught by try catch blocks or catch methods at the top level.
+
+
+
+
+const astrosUrl = 'http://api.open-notify.org/astros.json';
+const wikiUrl = 'https://en.wikipedia.org/api/rest_v1/page/summary/';
+const peopleList = document.getElementById('people');
+const btn = document.querySelector('button');
+
+// Handle all fetch requests
+async function getJSON(url) {
+  try {
+    const response = await fetch(url);
+    return await response.json()
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function getPeopleInSpace(url) {
+  const peopleJSON = await getJSON(url);
+  
+  const profiles = peopleJSON.people.map( async (person) => {
+    const craft = person.craft;                                   
+                                         
+    if (person.name == "Alexander Skvortsov") {
+       person.name = "Aleksandr_Skvortsov_(cosmonaut)"
+    }
+    if (person.name == "Andrew Morgan") {
+       person.name = "Andrew_R._Morgan"
+    }
+  
+    const profileJSON = await getJSON(wikiUrl + person.name);
+  
+    return {...profileJSON, craft};
+  });
+
+  return Promise.all(profiles);
+}
+
+// Generate the markup for each profile
+function generateHTML(data) {
+  data.map( person => {
+    const section = document.createElement('section');
+    peopleList.appendChild(section);
+    section.innerHTML = `
+      <img src=${person.thumbnail.source}>
+      <span>${person.craft}</span>
+      <h2>${person.title}</h2>
+      <p>${person.description}</p>
+      <p>${person.extract}</p>
+    `;
+  });
+}
+
+btn.addEventListener('click', async (event) => {
+  event.target.textContent = "Loading...";
+  try {
+    const astros = await getPeopleInSpace(astrosUrl);
+    generateHTML(astros);
+  } catch(e) {
+    peopleList.innerHTML = '<h3>Something went wrong!</h3>';
+    console.error(e);
+  } finally {
+    event.target.remove();
+  }
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,283 @@
+FIRST COMMITS
+
+INTRODUCTION
+
+git is a version control system. like a big undo button. helps teams work on a project.
+
+
+
+
+
+
+GIT OVERVIEW
+
+The collection of all the old versions of your project's files is known as a Git repository. Basically a folder in which you can edit your files, then run Git commands to store your changes.
+
+can easily download repository to other computers. can bring changes from other people's repositories back into your repository.
+
+git is a distributed system vs a central system. the data in any repo on any computer can be used to restore the repo on a different computer.
+
+all the commands start with the "git" executable, then space, then a sub-command or options
+
+Git options consist of either - followed by a single letter, or -- followed by a word
+
+git --help = prints help on the git program, a list of subcommands
+
+git clone, init = set up new repo
+
+git add, status, commit = used when committing new versions of files
+
+git log = view a list of old commits
+
+git mv = move files tracked by Git
+
+git rm = remove files tracked by Git
+
+git push, pull = synchronize commits with remote repos
+
+
+
+
+
+
+INITIALIZING A REPOSITORY
+
+2 ways to get a git repo onto your computer: clone (copy) it from another machine, or create a repo within a project directory (folder) on your computer
+
+current directory should be your project directory (cd directoryName to change to that directory)
+
+git init initializes a repository in the current directory by creating a new (hidden) directory named .git within it
+
+
+
+
+
+
+FIRST COMMITS
+
+need to be in the repository directory (the project directory that contains your .git directory) in order to use git commands
+
+project files are not automatically added to repository
+
+git status = gives us the status of documents (untracked, for example, means that git is not tracking changes to them)
+
+git add = before files are committed, they must be staged
+
+git commit -m "Description of changes" = commits files that were staged
+
+commit messages should complete the sentence "this commit will"
+
+before we can commit, must add name and email address to Git's configuration
+
+git config --global user.email "you@youremail.com"
+
+git config --global user.name "your name"
+
+
+
+
+
+
+STAGING CHANGED FILES
+
+same as staging new files
+
+git add fileName
+
+git commit -m "description of changes"
+
+
+
+
+
+
+VIEWING CHANGES TO A FILE
+
+git log -p = shows the changes made within each commit
+
+git diff = shows you the difference between the file and whats in the staging area or committed, showing you changes that havent been staged or committed
+
+git diff --staged = shows you the difference between staged files and committed files
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+MANAGING COMMITTED FILES
+
+REMOVING FILES
+
+rm fileName = removes file from your working directory
+
+git rm fileName = stages file to be removed from your repository, and will remove it from your working directory
+
+
+
+
+
+
+MOVING FILES
+
+git mv oldFileName newFileName = renames a file in your working directory and stages it
+
+
+
+
+
+
+UNSTAGING CHANGES
+
+git reset HEAD fileName = unstages file
+
+this command is suggested when running git status
+
+
+
+
+
+
+DISCARDING FILE MODIFICATIONS
+
+git checkout -- fileName = files will be overwritten with their last committed version. changes that were never committed cannot be retrieved.
+
+this command is suggested when running git status
+
+
+
+
+
+
+UNDOING FILE DELETIONS
+
+if you delete a file from your working directory, you can retrieve it by discarding the file modification
+
+git checkout -- fileName
+
+
+
+
+
+
+COMMIT SHAS AND UNDOING COMMITS
+
+git log gives you a string of numbers and letters after the word "commit." this is the Simple Hashing Algorithm Checksum (SHAC). The changes are fed to an algorithm, which outputs a unique string. You can specify a particular commit using a SHA
+
+git revert >=first5SHAcharacters = creates a new commit
+
+git revert HEAD = reverts most recent commit
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+GITHUB AND OTHER REMOTE REPOSITORIES
+
+CLONING A REPOSITORY
+
+commits are generally pushed to a central repository, and you can clone that repository to your local device
+
+git clone locationOfRepo directoryToCloneTo = location can be local or a url
+
+
+
+
+
+
+PULLING CHANGES
+
+Within a git repository, you can add links to other repos. These linked repos are referred to as remote repos. When you clone a git repo, the original repo is automatically added as a remote on the clone.
+
+git remote = lists remote repos. usually "origin"
+
+git pull remoteRepoName = pulls commits. Can omit repo name if it is the default, origin
+
+
+
+
+
+
+ADDING REMOTES
+
+git remote add newRemoteRepoName locationOfRepo = location can be url or directory path
+
+when pulling from a remote repo that is not the default, you must also specify the branch as a second argument
+
+git branch = returns current branch, usually master
+
+git pull remoteRepoName branchName = pulls commits from remote repo
+
+
+
+
+
+
+PUSHING COMMITS TO GITHUB
+
+create new repository on github, choose uploading from existing repository, follow directions.
+
+git remote add origin githuburl = origin is recommended by github for the remote repo name, and github supplies a url
+
+git push -u origin master = pushes changes from your local repo into a remote repo. -u upstream, source of the code in this local repo. This means you want git to remember the repo and branch you specified. This command will prompt you for your github username and password.
+
+git push = pushes changes to local repo after repo and branch preferences are set. still prompted for username and password.
+
+
+
+
+
+
+EXPLORING THE REPO ON GITHUB
+
+can click "clone or download" on github, copy link
+
+git clone copiedLink = clones github repo into a new local repo with the same name
+
+
+
+
+
+
+SUMMARY
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

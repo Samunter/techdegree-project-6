@@ -1,0 +1,160 @@
+Also called ES6
+
+const often the best choice for declaring variables. once you create a constant,  you can't give it another value. const doesn't prevent a complex object (array, object) from being modified; it just prevents it from being reassigned or overwritten completely.
+
+const person = {first_name: "Imogen"};
+person = {first_name: "Andrew"};
+error: assignment to constant variable
+person.first_name = "Andrew";
+
+first example is overwriting, second is modifying
+
+let works like var, allowing you to reassign variables. but unlike var, it has block level scoping.
+"the let variable declaration of i is localized to each cycle of the for loop. in other words, the i variable is disctinct for each cycle through the loop."
+
+
+
+Complete the code below to create variables scoped to the secondsWorked function:
+
+function secondsWorked(hours);
+  let totalTime;
+  const minutesInHour = 60;
+  const minutesInSecond = 60;
+  totalTime =  hours * minutesInHour * minutesInSecond; 
+}
+console.log( secondsWorked(40) );
+
+
+"You can see we're placing the result inside a div with the class basic"
+const singleQuotes = '<p>Single quotes</p>';
+const doubleQuotes = "<p>Double quotes</p>";
+
+const result = singleQuotes + doubleQuotes;
+document.querySelector('.basic').innerHTML = result;
+
+
+How to do the same thing on multiple lines?
+
+
+
+TEMPLATE LITERAL
+
+BASIC AND MULTIPLE LINE STRINGS
+Create a string using ` instead of ' or "
+
+const fruitList = '
+  <ul>
+     <li>Kiwi</li>
+     <li>Lime</li>
+     <li>Pineapple</li>
+  </ul>
+';
+
+
+vs
+
+
+const fruitList = 
+  "<ul>" +
+    "<li>Kiwi</li>" +
+    "<li>Lime</li>" +
+    "<li>Pineapple</li>" +
+  "</ul>";
+
+
+
+
+STRING INTERPOLATION
+Other languages use placeholders inside strings that can be evaluated later, ie
+`Hello, ${name}, nice to see you.`
+This is called interpolation. A value is interpolated into the string.
+
+function like(thing) {
+  return 'I like ' + thing;
+}
+
+function love(thing) {
+
+  return `I love ${thing}`;
+}
+
+const sentence = `<p>${like(`apples`)}, but ${love(`oranges`)}.</p>`;
+
+
+
+const cost = 8;
+const unitsPurchased = 100;
+let total = 'Total cost is ${cost * unitsPurchased}.`
+console.log(total);
+
+
+
+
+
+
+BASIC ARROW SYNTAX
+
+INTRODUCING ARROW FUNCTIONS
+
+function declaration:
+function sayName() {};
+
+function expression:
+const sayName = function() {};
+
+arrow function expression:
+const sayName = () => {};
+
+
+
+
+ADDING ARGUMENTS TO ARROW FUNCTIONS
+
+Looks the same as in a regular function.
+
+const square = (x) => {
+    return x * x;
+}
+
+const multiply = (x, y) => {
+    return x * y;
+}
+
+
+
+
+CONCISE ARROW FUNCTION SYNTAX
+
+Can remove parentheses if function takes one argument
+Can remove "return" keyword if only a single line
+Can remove curly braces if only a single line
+
+const square = x => x * x;
+
+
+
+
+SUMMARY
+
+//Function Declaration
+
+function divide1(a, b) {
+  return a / b; 
+}
+
+//Function Expression
+
+const divide2 = function(a, b) {
+  return a / b;
+}
+
+//Arrow Function Expression
+
+const divide3 = (a, b) => {
+  return a / b;
+}
+
+//Arrow Function Expression - concise
+
+const divide4 = (a, b) => a / b;
+

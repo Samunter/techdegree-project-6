@@ -1,0 +1,75 @@
+CARD.PUG
+
+doctype html
+html(lang="en")
+  head
+    title Flashcards
+  body
+    header
+      h1 Flashcards
+    section#content
+      ul
+        each color in colors
+          li= color
+      h2= prompt
+      if hint
+        p
+          i Hint: #{hint}
+    footer
+      p An app to help you study
+
+
+
+APP.JS
+
+const express = require('express');
+
+const app = express();
+
+const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
+
+app.set('view engine', 'pug');
+
+app.get('/', (req, res) => {
+  res.render('index');
+});
+
+app.get('/cards', (req, res) => {
+  res.locals.colors = colors;
+  res.locals.prompt = "Who is buried in Grant's tomb?";
+  res.render('card');
+});
+
+app.listen(3000, () => {
+  console.log('The application is running on localhost:3000!');
+});
+
+
+
+
+
+TypeError: C:\Users\Sammarae\Desktop\cmder_mini\flashcards\views\card.pug:10
+    8|     section#content
+
+    9|       ul
+
+  > 10|         each color in colors
+
+    11|           li= color
+
+    12|       h2= prompt
+
+    13|       if hint
+
+
+Cannot read property 'length' of undefined
+    at eval (eval at wrap (C:\Users\Sammarae\Desktop\cmder_mini\flashcards\node_modules\pug-runtime\wrap.js:6:10), <anonymous>:29:32)
+    at eval (eval at wrap (C:\Users\Sammarae\Desktop\cmder_mini\flashcards\node_modules\pug-runtime\wrap.js:6:10), <anonymous>:48:4)
+    at template (eval at wrap (C:\Users\Sammarae\Desktop\cmder_mini\flashcards\node_modules\pug-runtime\wrap.js:6:10), <anonymous>:72:139)
+    at Object.exports.renderFile (C:\Users\Sammarae\Desktop\cmder_mini\flashcards\node_modules\pug\lib\index.js:427:38)
+    at Object.exports.renderFile (C:\Users\Sammarae\Desktop\cmder_mini\flashcards\node_modules\pug\lib\index.js:417:21)
+    at View.exports.__express [as engine] (C:\Users\Sammarae\Desktop\cmder_mini\flashcards\node_modules\pug\lib\index.js:464:11)
+    at View.render (C:\Users\Sammarae\Desktop\cmder_mini\flashcards\node_modules\express\lib\view.js:128:8)
+    at tryRender (C:\Users\Sammarae\Desktop\cmder_mini\flashcards\node_modules\express\lib\application.js:640:10)
+    at Function.render (C:\Users\Sammarae\Desktop\cmder_mini\flashcards\node_modules\express\lib\application.js:592:3)
+    at ServerResponse.render (C:\Users\Sammarae\Desktop\cmder_mini\flashcards\node_modules\express\lib\response.js:966:7)

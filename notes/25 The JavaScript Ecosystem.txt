@@ -1,0 +1,151 @@
+JAVASCRIPT OUTSIDE OF THE BROWSER
+
+CLIENT-SIDE VS SERVER-SIDE JAVASCRIPT
+
+client-side means it runs in the browser. user interactivity, how js access/manipulates DOM
+
+server-side executes on the server. used for building apis, databases, web servers. can provide customized experiences for each users request to a website
+
+host objects are supplied to javascript by the environment. the objects are available only in that specific environment. For example, the browser provides the window object for working with the DOM. The browser also provides document, history, XMLHttpRequest, and other host objects. Node, a server-side runtime environment for javascript, provides a completely different set of host objects.
+
+Javascript's native objects are available to you no matter the environment - they're part of the language. Like the string, number, array, and math objects.
+
+
+
+
+
+
+WHAT IS NODE.JS?
+
+Node is a cross-platform runtime environment for developing server-side applications with JavaScript. You can use it to build commandline tools, frameworks, web servers, etc
+
+Node supplies different host objects than the browser. http, https, fs (file system), url, os, etc.
+
+Node does well with building real-time, multi-user applications that handle many events at the same time. One of best parts is its ecosystem of free, open-source tools. NPM, node package manager, allows for the sharing and reuse of code and software written by other developers in the javascript community. Developers often use NPM as a task runner to help automate repetitive tasks and omst of their build tool chain.
+
+developers often use a node framework, like Express. express provides built-in tools and functionality to take care of common tasks like routing or handling requests at different URL paths.
+
+
+
+
+
+
+BUILD NATIVE APPLICATIONS WITH JAVASCRIPT
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+JAVASCRIPT FRAMEWORKS, LIBRARIES, AND DEVELOPER ROLES
+
+JAVASCRIPT FRAMEWORKS AND LIBRARIES
+
+A common use case for a javascript framework is to build single page web applications that run in the browser
+
+the main ones are react, vue, and angular
+
+React is one of the most popular js libraries, developed by facebook. Makes building and maintaining UI faster and easier by breaking into smaller reusable components. React Native framework for mobile.
+
+Vue.js is a framework that shares many similarities with React. Offers more tools out of the box, smaller in file size, a little easier to learn. Good for either entire UI or just small parts.
+
+Angular has more functionality than most out there. Maintained by Google, referred to as a complete solution. Can build complex single page web apps on its own.
+
+All traditionally client-side. Run in the browser, produce DOM as output and manipulate DOM of the rendered page. Also have server-side counterparts built by open source js community.
+
+Next.js is a popular framework for server rendered React apps.
+
+NUXT is a higher level framework for creating server-side rendered apps with Vue
+
+Angular Universal library for implementing server side rendering for an angular application.
+
+These server-side frameworks pre-load your app on a web server and send rendered HTML when the browser requests it. then you perform the usual DOM manipulation and updates client-side.
+
+
+
+
+
+
+TESTING JAVASCRIPT
+
+many different methods. Code a small part of the program, refresh, interact to make sure everything works. Check for runtime errors and warning messages in the console. This manual testing can be slow and error-prone, doesn't always prove that your logic works.
+
+programatically test code with special functions called unit tests to check if each part of their program works, even in edge cases. first, id expected outcomes of every part of their program, then write tests to make sure those parts work as intended.
+
+writing unit tests from scratch, esp on big projects, tend to be limited, hard to implement, time consuming. There are libraries and frameworks that let you quickly write automated unit tests.
+
+Mocha is one of the most used js testing libraries. It runs on Node and in the browser. Provides the base structure for setting up your tests. Can be easily integrated with other libraries for additional functionality.
+
+Jasmine is another js unit testing framework. Does not depend on any other js framework. provides everything you need to test your code right out of the box. the popular choice for testing angular applications.
+
+Jest is a feature rich testing library created by facebook. many react developers test with jest because it's already set up when you create a project with Create React App. can test any js app with jest. Built for unit and integration testing, which means it can run tests to check if all the units of your app work together correctly.
+
+Enzyme is a js testing utility for react, created and used by Airbnb. Built to be compatible with other testing libraries.
+
+Writing unit tests can help you improve your code before you even start writing it, and can serve as valuable documentation for how your application is supposed to work. You'll have fewer bugs, spend less time debugging, and better understand the problems you do have. 
+
+
+
+
+
+
+THE DIFFERENT TYPES OF JAVASCRIPT DEVELOPERS
+
+A typical software development team is made up of several different roles, from developers who write the code to those who design the user interface, test and report bugs, prototype, manage the team, and more.
+
+JUNIOR DEVELOPER
+
+New, likely won't be coding a project end to end. Usually contribute to existing code bases. Learn the ropes by fixing bugs and adding additional features and functionality to existing projects.
+
+SENIOR DEVELOPER
+
+Experienced, has more responsibilities and usually contributes more to a project. Handles most of a project's development life cycle end-to-end. Team multipliers, make people around them better. Provide guidance and direction to junior developers through mentorship, code reviews, and pair programming sessions.
+
+ARCHITECT
+
+Senior technical role responsible for coming up with strategy and technical solutions for a project, communicating it to the team, and making sure it's successfully executed. Has technical knowledge and the skills to know what's possible and not possible in a project. Might decide on what tools will be used. Have code skills to create early prototypes.
+
+SOFTWARE DEV MANAGER
+
+Keeps dev team on track, sees projects through completion
+
+QUALITY ASSURANCE TESTERS
+
+make sure every part of software does what it was intended to do. Test for defects and bugs, documents any technical issues. communicate with the developers frequently to make sure all errors are corrected before shipping the project.
+
+DESIGNERS
+
+work on the visual design
+
+FRONT END DEVELOPERS
+
+create HTML and CSS, and oftentimes the client-side js that makes the interface interactive
+
+PRODUCT MANAGER
+
+works cross-functionally, or with just about everyone on the team. figure out what products to make for the company, make sure those products get made. Often lead team from conception to launch. Work on customer research, problem identification, user experience research, wireframing and more
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,62 @@
+CONDITIONAL TERMINOLOGY
+
+SWITCH STATEMENT
+
+var day = 0;
+
+switch (day) {
+   case 0;
+      console.log('Sunday');
+      break;
+   case 1;
+      console.log('Monday');
+      break;
+   case 2;
+   ...
+   default;
+      console.log('Invalid Day');
+      break;
+};
+//the corresponding day of the week is logged to the console. if the value of "day" is not 0-6, "invalid day" is printed
+
+
+
+
+
+
+TERNARY OPERATOR
+
+var isTrue = true;
+
+isTrue ? console.log('yes') : console.log('no');
+
+//logs yes to the console if true, no if false
+
+
+var yesOrNo = isTrue ? 'yes' : 'no';
+
+//ternary expressions can evaluate, so 'yes' is returned and stored in the variable
+
+
+
+
+
+
+SHORT CIRCUIT EVALUATION
+
+create global validation variable!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

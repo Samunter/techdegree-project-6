@@ -1,0 +1,150 @@
+INTRO TO SELECTORS
+
+Selectors can be defined based on an element's type, it's class or ID attribute, even how we interact with the element, and more. 
+
+css rules tell a browser how to render html elements.
+
+we can think of selectors as patterns that allow us to target html elements and apply styles to them. when we define a selector in our stylesheet, we're instructing the browser to match every instance of that selector in the html.
+
+the universal selector selects every element on the page at once and applies the styles we set
+
+* {
+	margin: 0;
+	padding: 0;
+	color: red;
+}
+
+the whole thing is a css rule, * is our selector, followed by the declaration block.
+
+
+
+
+TYPE SELECTORS
+
+Type selector is used to select an element type on the page. They're also called element selectors because we just use the element's html tag as the selector. they're good for describing what elements look like by default.
+
+div {
+	color: red;
+}
+
+
+
+
+ID SELECTORS
+
+unlike a type selector which targets every element with the corresponding element type, an ID selector lets us assign a unique id to an element. that way we're able to specifically target an element based on it's id attribute.
+
+IDs can be used as fragment identifiers that create anchors in a page
+
+in html document
+
+<div id="primary-content">
+
+
+in css stylesheet
+
+#primary-content {
+	border: 3px solid red;
+
+
+an element can only have one id, and a page can only have one element with a particular id name
+}
+
+
+
+
+CLASS SELECTORS
+
+A class can be used to classify and target more than one element. It should have a descriptive name.
+
+in html document
+
+<div class="primary-content">
+
+
+in css stylesheet
+
+.primary-content {
+	border: 3px solid red;
+
+
+
+
+REUSING CLASSES
+
+An element can have multiple classes assigned to it
+
+If an element has an ID and a class applied, the styles defined in the ID selector will override
+
+
+
+
+DESCENDANT SELECTORS
+
+Targets elements based on their relationship in the html document. Combines 2 selectors, first can be type, class, id... 
+
+descendent selectors are very specific, so the can override less specific selectors. using too man descendant selectors makes our css rules less reusable. most of the time we're better off giving the element a class attribute.
+
+.main-header span {
+  color: white;
+  font-size: 26px;
+}
+
+
+
+
+PSEUDO-CLASSES
+
+pseudo classes are not explicitly defined in an element's class attribute, and they don't appear in the source code. Can target elements dynamically based on user interaction, an elements state, and more. think of a pseudo class as a keyword we add to a selector to style a special state of an element. a list of all the standard pseudo classes can be found at 
+https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes
+
+links that have not been clicked
+
+a:link {
+  color: orange;
+}
+
+
+links that have been clicked
+
+a:visited {
+  color: lightblue;
+}
+
+
+hover pseudo class
+
+p:hover {
+  color: forestgreen;
+}
+
+
+active pseudo class, applies style when something is being clicked
+
+a:active {
+  color: lightcoral;
+}
+
+
+focus pseudo class applied to interactive elements (link, button, form) when "focused" on (e.g. highlighted when navigating site via keyboard)
+
+:focus {
+  color: white;
+  background-color: orange;
+}
+
+or
+
+a:focus {}
+
+
+
+
+CSS COMMENTS
+
+/* comment */
+
+can be used to introduce sections, at the end of a line of code to describe what it does, or to disable code for testing/debugging
+
+keyboard shortcut
+Ctrl + /
