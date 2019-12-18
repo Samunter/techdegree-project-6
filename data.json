@@ -1,0 +1,49 @@
+{
+  "projects": [
+    {
+      "id": "0",
+      "project_name": "Random Quote Generator",
+      "description": "Displays a random quote from a curated selection, with a changing background color to accompany it. Quotes and colors change automatically, but the viewer can also click to show other quotes. ",
+      "technologies": ["JavaScript"],
+      "live_link": "https://samunter.github.io/techdegree-project-1/",
+      "github_link": "https://github.com/Samunter/techdegree-project-1",
+      "image_urls": ["project-1-landscape-1", "project-1-landscape-2"]
+    },
+    {
+      "id": "1",
+      "project_name": "List Pagination and Filtering",
+      "description": "This project paginates a given list of students and creates links which dynamically display a set of students.",
+      "technologies": ["JavaScript"],
+      "live_link": "https://samunter.github.io/techdegree-project-2/",
+      "github_link": "https://github.com/Samunter/techdegree-project-2",
+      "image_urls": ["project-2-landscape-1", "project-2-landscape-2"]
+    },
+    {
+      "id": "2",
+      "project_name": "Interactive Form",
+      "description": "This project utilizes jQuery to add dynamic functionality to a form, validates form fields, prevents the form from submitting if any fields are invalid, and visually indicates errors to the user.",
+      "technologies": ["JavaScript", "JQuery"],
+      "live_link": "https://samunter.github.io/techdegree-project-3/",
+      "github_link": "https://github.com/Samunter/techdegree-project-3",
+      "image_urls": ["project-3-landscape-1", "project-3-landscape-2"]
+    },
+    {
+      "id": "3",
+      "project_name": "Object Oriented Programming Game",
+      "description": "A game that responds to user interaction and reveals letters in a hidden phrase. The user can type on their keyboard or click keys on an onscreen keyboard. The winning/losing screen allows the player to restart the game, where the game is reset and a new hidden phrase is populated to the screen.",
+      "technologies": ["JavaScript"],
+      "live_link": "https://samunter.github.io/techdegree-project-4/",
+      "github_link": "https://github.com/Samunter/techdegree-project-4",
+      "image_urls": ["project-4-landscape-1", "project-4-landscape-2"]
+    },
+    {
+      "id": "4",
+      "project_name": "Public API Requests",
+      "description": "This project creates a mock employee directory with data fetched from a public API. It displays employee information dynamically, as well as displaying additional information when an employee is clicked.",
+      "technologies": ["JavaScript"],
+      "live_link": "https://samunter.github.io/techdegree-project-5/",
+      "github_link": "https://github.com/Samunter/techdegree-project-5",
+      "image_urls": ["project-5-landscape-1", "project-5-landscape-2"]
+    }
+  ]
+}
