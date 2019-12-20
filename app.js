@@ -28,7 +28,6 @@ app.get('/projects/:id', (req, res, next) => {
     next();
   }
 
-  console.log('project', project); // Sanity check
   res.render('project', project);
 });
 
